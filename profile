@@ -3,7 +3,23 @@
 
 export PATH="/usr/local/opt/ruby/bin:/opt/metasploit-framework/bin:$PATH"
 export GOPATH=$HOME/go;
-export JAVA_HOME="/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home"
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    if [ -f "$HOME/.dotfiles/profile_darwin" ]; then
+        source "$HOME/.dotfiles/profile_darwin"
+    fi
+fi
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+    if [ -f "$HOME/.dotfiles/profile_linux" ]; then
+        source "$HOME/.dotfiles/profile_linux"
+    fi
+fi
+
+if [ -f "$HOME/.dotfiles/profile_linux" && ]; then
+
+elif [ -f "$HOME/.dotfiles/profile_darwin" ];
+
+fi
 
 # private env vars
 if [ -f "$HOME/.profile_private" ]; then
