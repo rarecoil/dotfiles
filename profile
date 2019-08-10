@@ -8,11 +8,13 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     if [ -f "$HOME/.dotfiles/profile_darwin" ]; then
         source "$HOME/.dotfiles/profile_darwin"
     fi
+    DD_COMMAND="gdd"
 fi
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
     if [ -f "$HOME/.dotfiles/profile_linux" ]; then
         source "$HOME/.dotfiles/profile_linux"
     fi
+    DD_COMMAND="dd"
 fi
 
 # private env vars
@@ -22,7 +24,7 @@ fi
 
 # aliases
 alias genpass="LC_CTYPE=C tr -dc '[:alnum:]' < /dev/urandom | fold -w 40 | head -n 1"
-alias zerodisk="gdd if=/dev/zero of=$1 bs=4M conv=fdatasync status=progress"
+alias zerodisk="$(DD_COMMAND) if=/dev/zero of=$1 bs=4M conv=fdatasync status=progress"
 alias dockershell="docker run --rm -i -t --entrypoint=/bin/bash"
 
 function cloneall() {
