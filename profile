@@ -15,12 +15,6 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     fi
 fi
 
-if [ -f "$HOME/.dotfiles/profile_linux" && ]; then
-
-elif [ -f "$HOME/.dotfiles/profile_darwin" ];
-
-fi
-
 # private env vars
 if [ -f "$HOME/.profile_private" ]; then
     source $HOME/.profile_private;

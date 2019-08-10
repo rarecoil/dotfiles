@@ -22,7 +22,6 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     if ! [ -h "$HOME/.profile" ]; then
       ln -s "$HOME/.profile" ./profile
     fi
-
 elif [[ "$OSTYPE" == "linux-gnu" ]]; then
     DISTRO=""
     if [ -x "$(command -v pacman)" ]; then
@@ -61,7 +60,13 @@ go get -u github.com/justjanne/powerline-go
 # janus / vim
 curl -L https://bit.ly/janus-bootstrap | bash
 if ! [-h "$HOME/.vimrc.after" ]; then
-  ln -s ./.dotfiles/vimrc.after "$HOME/.vimrc.after"
+    ln -s ./.dotfiles/vimrc.after "$HOME/.vimrc.after"
+fi
+
+# generate ssh key
+if ! [ -f "$HOME/.ssh/id_ed25519" ]; then
+    echo "No SSH key found, generating SSH key."
+    ssh-keygen -t ed25519 -C "rarecoil@$(hostname | cut -d\".\" -f1)"
 fi
 
 echo "Complete."
