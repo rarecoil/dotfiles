@@ -19,8 +19,8 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     # now, install things we need
     brew install coreutils go node python ruby
 
-    if ! [ -h "$HOME"/.profile ]; then
-      ln -s "$HOME"/.profile ./profile
+    if ! [ -h "$HOME/.profile" ]; then
+      ln -s "$HOME/.profile" ./profile
     fi
 
 elif [[ "$OSTYPE" == "linux-gnu" ]]; then
@@ -35,7 +35,6 @@ elif [[ "$OSTYPE" == "linux-gnu" ]]; then
     fi
 
     if [ "$DISTRO" == "arch" ]; then
-        # pacman
         pacman -Syu
         pacman -S curl vim nodejs npm go ruby python3 base-devel git
     elif [ "$DISTRO" == "debian" ]; then
@@ -46,7 +45,7 @@ elif [[ "$OSTYPE" == "linux-gnu" ]]; then
     fi
 
     if [ -f "$HOME/.bashrc" ]; then
-        mv "$HOME"/.bashrc "$HOME"/.bashrc.old
+        mv "$HOME/.bashrc" "$HOME/.bashrc.old"
     fi
 
     if ! [ -h "$HOME/.bashrc"]; then
@@ -61,14 +60,14 @@ go get -u github.com/justjanne/powerline-go
 
 # janus / vim
 curl -L https://bit.ly/janus-bootstrap | bash
-if ! [-h $"HOME/.vimrc.after" ]; then
-  ln -s ./dotfiles/vimrc.after "$HOME"/.vimrc.after
+if ! [-h "$HOME/.vimrc.after" ]; then
+  ln -s ./.dotfiles/vimrc.after "$HOME/.vimrc.after"
 fi
 
 echo "Complete."
 # source our new shell scripts
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    source "$HOME"/.profile
+    source "$HOME/.profile"
 else
-    source "$HOME"/.bashrc
+    source "$HOME/.bashrc"
 fi
