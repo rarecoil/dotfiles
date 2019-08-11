@@ -3,6 +3,8 @@
 # shellcheck disable=SC1090
 
 cd "$(dirname "$0")" || exit 1
+DOTFILES_DIR = "$(dirname "$0")"
+
 
 if [ "$(id -u)" = 0 ]; then
     echo "This script is not to be run as root."
@@ -20,7 +22,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     brew install coreutils go node python ruby
 
     if ! [ -h "$HOME/.profile" ]; then
-      ln -s "$HOME/.profile" ./profile
+      ln -s "$DOTFILES_DIR/.profile" "$HOME/.profile"
     fi
 elif [[ "$OSTYPE" == "linux-gnu" ]]; then
     DISTRO=""
@@ -34,21 +36,21 @@ elif [[ "$OSTYPE" == "linux-gnu" ]]; then
     fi
 
     if [ "$DISTRO" == "arch" ]; then
-        pacman -Syu
-        pacman -S curl vim nodejs npm go ruby python3 base-devel git
+        sudo pacman -Syu
+        sudo pacman -S curl vim nodejs npm go ruby python3 base-devel git
     elif [ "$DISTRO" == "debian" ]; then
-        apt-get update
-        apt-get install -y curl vim
+        sudo apt-get update
+        sudo apt-get install -y curl vim
         curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
-        apt-get install -y nodejs ruby golang build-essential git-core
+        sudo apt-get install -y nodejs ruby golang build-essential git-core
     fi
 
     if [ -f "$HOME/.bashrc" ]; then
         mv "$HOME/.bashrc" "$HOME/.bashrc.old"
     fi
 
-    if ! [ -h "$HOME/.bashrc"]; then
-      ln -s ./profile ./.bashrc
+    if ! [ -h "$HOME/.bashrc" ]; then
+      ln -s "$DOTFILES_DIR/profile" "$HOME/.bashrc"
     fi
 fi
 

@@ -24,7 +24,7 @@ fi
 
 # aliases
 alias genpass="LC_CTYPE=C tr -dc '[:alnum:]' < /dev/urandom | fold -w 40 | head -n 1"
-alias zerodisk="$(DD_COMMAND) if=/dev/zero of=$1 bs=4M conv=fdatasync status=progress"
+alias zerodisk="$DD_COMMAND if=/dev/zero of=$1 bs=4M conv=fdatasync status=progress"
 alias dockershell="docker run --rm -i -t --entrypoint=/bin/bash"
 
 function cloneall() {
@@ -49,18 +49,20 @@ if [ "$TERM" != "linux" ] && [ -f "$GOPATH/bin/powerline-go" ]; then
 fi
 
 # homebrew-specific
-export HOMEBREW_NO_ANALYTICS=1
-export HOMEBREW_NO_INSECURE_REDIRECT=1
-export HOMEBREW_CASK_OPTS=--require-sha
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    export HOMEBREW_NO_ANALYTICS=1
+    export HOMEBREW_NO_INSECURE_REDIRECT=1
+    export HOMEBREW_CASK_OPTS=--require-sha
 
-HOMEBREW_PREFIX=$(brew --prefix)
-if type brew &>/dev/null; then
-  for COMPLETION in "$HOMEBREW_PREFIX"/etc/bash_completion.d/*
-  do
-    [[ -f $COMPLETION ]] && source "$COMPLETION"
-  done
-  if [[ -f ${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh ]];
-  then
-    source "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh"
-  fi
+    HOMEBREW_PREFIX=$(brew --prefix)
+    if type brew &>/dev/null; then
+      for COMPLETION in "$HOMEBREW_PREFIX"/etc/bash_completion.d/*
+      do
+        [[ -f $COMPLETION ]] && source "$COMPLETION"
+      done
+      if [[ -f ${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh ]];
+      then
+        source "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh"
+      fi
+    fi
 fi
