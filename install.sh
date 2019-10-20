@@ -3,8 +3,9 @@
 # shellcheck disable=SC1090
 
 cd "$(dirname "$0")" || exit 1
-DOTFILES_DIR = "$(dirname "$0")"
-
+DOTFILES_DIR="$(pwd -P)"
+echo $DOTFILES_DIR
+exit 0
 
 if [ "$(id -u)" = 0 ]; then
     echo "This script is not to be run as root."
@@ -37,7 +38,7 @@ elif [[ "$OSTYPE" == "linux-gnu" ]]; then
 
     if [ "$DISTRO" == "arch" ]; then
         sudo pacman -Syu
-        sudo pacman -S curl vim nodejs npm go ruby python3 base-devel git
+        sudo pacman -S curl vim nodejs npm go ruby python3 base-devel git crystal
     elif [ "$DISTRO" == "debian" ]; then
         sudo apt-get update
         sudo apt-get install -y curl vim
@@ -61,7 +62,7 @@ go get -u github.com/justjanne/powerline-go
 
 # janus / vim
 curl -L https://bit.ly/janus-bootstrap | bash
-if ! [-h "$HOME/.vimrc.after" ]; then
+if ! [ -f "$HOME/.vimrc.after" ]; then
     ln -s ./.dotfiles/vimrc.after "$HOME/.vimrc.after"
 fi
 
